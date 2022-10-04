@@ -65,7 +65,7 @@ class Contact:
         new_phone = new_account[1]
         new_email = new_account[2]
         old_name_list = old_name.split()
-        Contact.everybody[id][0] = new_account
+        Contact.everybody[id] = new_account
         if old_phone != new_phone:
             if old_phone == '':
                 Contact.no_phones.remove(id)
@@ -134,7 +134,8 @@ while input() != '-':
         print(Contact.everybody)
     if task == 7:
         print(Contact.everybody)
-        task_id = input('Введите id изменяемого профиля')
+        task_id = int(input('Введите id изменяемого профиля'))
         task_after = list(input('Введите желаемые значения для данного профиля').split())
+        Contact.change(user, task_id, task_after)
     print('Выполняем поиск? + если да, - если нет')
 print('До следующего раза!')
