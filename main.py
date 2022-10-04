@@ -12,9 +12,13 @@ class Contact:
     all_names12 = {}
     # это словарик, где ключом является имя отчество, а значениями-люди, которые имеют эти имя отчество
     all_names23 = {}
+    # это словарик со всеми телефонами
     all_phones = {}
+    # это словарик со всеми емайлами
     all_emails = {}
+    # это словарик для тех, у кого нет емайла
     no_emails = []
+    # это словарик для тех, у кого нет телефона
     no_phones = []
     id = 0
 
@@ -71,40 +75,59 @@ class Contact:
             if old_phone == '':
                 if id in Contact.no_phones:
                     Contact.no_phones.remove(id)
+            if new_phone in Contact.all_phones.keys():
                 Contact.all_phones[new_phone].append(id)
+            elif new_phone!='':
+                Contact.all_phones[new_phone]=[id]
             else:
-                Contact.all_phones[old_phone].remove(id)
-                Contact.all_phones[new_phone].append(id)
+                Contact.no_phones.append(id)
         if old_email != new_email:
             if old_email == '':
-                Contact.no_emails.remove(id)
+                if id in Contact.no_emails:
+                    Contact.no_emails.remove(id)
+            if new_email in Contact.all_emails.keys():
                 Contact.all_emails[new_email].append(id)
+            elif new_email!='':
+                Contact.all_emails[new_email]=[id]
             else:
-                Contact.all_emails[old_email].remove(id)
-                Contact.all_emails[new_email].append(id)
+                Contact.no_emails.append(id)
         if old_name_list[0] != new_name_list[0]:
             # если поменяли фамилию
-            Contact.all_names1[old_name_list[0]].remove(id)
-            Contact.all_names1[new_name_list[0]].append(id)
+            if id in Contact.all_names1[old_name_list[0]]:
+                Contact.all_names1[old_name_list[0]].remove(id)
+            if new_name_list[0] in Contact.all_names1.keys():
+                Contact.all_names1[new_name_list[0]].append(id)
+            else:
+                Contact.all_names1[new_name_list[0]]=[id]
             # если поменяли имя
-            if len(old_name_list) > 1:
-                Contact.all_names2[old_name_list[1]].remove(id)
-                Contact.all_names2[new_name_list[1]].append(id)
+            if len(old_name_list) > 2:
+                if id in Contact.all_names2[old_name_list[1]]:
+                    Contact.all_names2[old_name_list[1]].remove(id)
+            if len(new_name_list) > 2:
+                if new_name_list[1] in Contact.all_names2.keys():
+                    Contact.all_names2[new_name_list[1]].append(id)
+                else:
+                    Contact.all_names2[new_name_list[1]]=[id]
             # другие общие изменения
-            if len(old_name_list) > 1:
+            if len(old_name_list) > 1 and id in Contact.all_names12[old_name_list[0] + ' ' + old_name_list[1]]:
                 Contact.all_names12[old_name_list[0] + ' ' + old_name_list[1]].remove(id)
             if len(new_name_list) > 1:
-                Contact.all_names12[new_name_list[0] + ' ' + new_name_list[1]].append(id)
-            if len(old_name_list) > 2:
+                if new_name_list[0] + ' ' + new_name_list[1] in Contact.all_names12.keys():
+                    Contact.all_names12[new_name_list[0] + ' ' + new_name_list[1]].append(id)
+                else:
+                    Contact.all_names12[new_name_list[0] + ' ' + new_name_list[1]]=[id]
+            if len(old_name_list) > 2 and id in Contact.all_names23[old_name_list[1] + ' ' + old_name_list[2]]:
                 Contact.all_names23[old_name_list[1] + ' ' + old_name_list[2]].remove(id)
             if len(new_name_list) > 2:
-                Contact.all_names23[new_name_list[1] + ' ' + new_name_list[2]].append(id)
+                if new_name_list[1] + ' ' + new_name_list[2] in Contact.all_names23.keys():
+                    Contact.all_names23[new_name_list[1] + ' ' + new_name_list[2]].append(id)
+                else:
+                    Contact.all_names23[new_name_list[1] + ' ' + new_name_list[2]]=[id]
 
 
 import codecs
 
-# file = input('Введите имя файла')
-file = 'Contacts.txt'
+file = input('Введите имя файла')
 k = 0
 f = codecs.open(file, "r", "utf_8_sig")
 for x in f:
