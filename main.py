@@ -61,25 +61,44 @@ class Contact:
     def change(self, id, new_account):
         old_name = Contact.everybody[id][0]
         old_phone = Contact.everybody[id][1]
-        email = Contact.everybody[id][2]
+        old_email = Contact.everybody[id][2]
+        new_name_list = new_account[0].split()
         new_phone = new_account[1]
         new_email = new_account[2]
         old_name_list = old_name.split()
         Contact.everybody[id] = new_account
         if old_phone != new_phone:
             if old_phone == '':
-                Contact.no_phones.remove(id)
+                if id in Contact.no_phones:
+                    Contact.no_phones.remove(id)
                 Contact.all_phones[new_phone].append(id)
             else:
                 Contact.all_phones[old_phone].remove(id)
                 Contact.all_phones[new_phone].append(id)
-        if email != new_email:
-            if email == '':
+        if old_email != new_email:
+            if old_email == '':
                 Contact.no_emails.remove(id)
                 Contact.all_emails[new_email].append(id)
             else:
-                Contact.all_emails[email].remove(id)
+                Contact.all_emails[old_email].remove(id)
                 Contact.all_emails[new_email].append(id)
+        if old_name_list[0] != new_name_list[0]:
+            # если поменяли фамилию
+            Contact.all_names1[old_name_list[0]].remove(id)
+            Contact.all_names1[new_name_list[0]].append(id)
+            # если поменяли имя
+            if len(old_name_list) > 1:
+                Contact.all_names2[old_name_list[1]].remove(id)
+                Contact.all_names2[new_name_list[1]].append(id)
+            # другие общие изменения
+            if len(old_name_list) > 1:
+                Contact.all_names12[old_name_list[0] + ' ' + old_name_list[1]].remove(id)
+            if len(new_name_list) > 1:
+                Contact.all_names12[new_name_list[0] + ' ' + new_name_list[1]].append(id)
+            if len(old_name_list) > 2:
+                Contact.all_names23[old_name_list[1] + ' ' + old_name_list[2]].remove(id)
+            if len(new_name_list) > 2:
+                Contact.all_names23[new_name_list[1] + ' ' + new_name_list[2]].append(id)
 
 
 import codecs
