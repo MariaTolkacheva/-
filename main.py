@@ -2,10 +2,15 @@ print('задание по Технологии Программирования
 
 
 class Contact:
+    # это все люди с их уникальными id и их данными
     everybody = {}
+    # это словарик, где ключом является фамилия, а значениями-люди, которые имеют эту фамилию
     all_names1 = {}
+    # это словарик, где ключом является имя, а значениями-люди, которые имеют это имя
     all_names2 = {}
+    # это словарик, где ключом является фамилия имя, а значениями-люди, которые имеют эту фамилию и имя
     all_names12 = {}
+    # это словарик, где ключом является имя отчество, а значениями-люди, которые имеют эти имя отчество
     all_names23 = {}
     all_phones = {}
     all_emails = {}
@@ -61,22 +66,20 @@ class Contact:
         new_email = new_account[2]
         old_name_list = old_name.split()
         Contact.everybody[id][0] = new_account
-        if old_phone!=new_phone:
-            if old_phone=='':
+        if old_phone != new_phone:
+            if old_phone == '':
                 Contact.no_phones.remove(id)
                 Contact.all_phones[new_phone].append(id)
             else:
                 Contact.all_phones[old_phone].remove(id)
                 Contact.all_phones[new_phone].append(id)
-        if email!=new_email:
-            if email=='':
+        if email != new_email:
+            if email == '':
                 Contact.no_emails.remove(id)
                 Contact.all_emails[new_email].append(id)
             else:
                 Contact.all_emails[email].remove(id)
                 Contact.all_emails[new_email].append(id)
-
-
 
 
 import codecs
@@ -91,10 +94,10 @@ for x in f:
     user = Contact(pd[0], pd[1][1::], pd[2])
 f.close()
 print('Выполняем поиск? + если да, - если нет')
-while input()!='-':
+while input() != '-':
     print('Чтобы выполнить команду выберите 1- найти по номеру телефона, 2- найти по email, 3- найти по имени,'
           '4- найти по фамилии, 5- найти по Фамилия Имя, 6- найти по Имя Отчество, 7- редактирование профиля,'
-          '8- найти всех без номера телефона, 9- найти всех без email. Программа будет выполнять поиск до тех пор, пока вы не выберете 666')
+          '8- найти всех без номера телефона, 9- найти всех без email. Программа будет выполнять поиск до тех пор, пока вы не выберете -')
     task = int(input())
     if task == 1:
         print('Введите номер телефона')
