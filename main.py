@@ -90,42 +90,44 @@ for x in f:
     pd = x.split(',')
     user = Contact(pd[0], pd[1][1::], pd[2])
 f.close()
+print('Выполняем поиск? + если да, - если нет')
+while input()!='-':
+    print('Чтобы выполнить команду выберите 1- найти по номеру телефона, 2- найти по email, 3- найти по имени,'
+          '4- найти по фамилии, 5- найти по Фамилия Имя, 6- найти по Имя Отчество, 7- редактирование профиля,'
+          '8- найти всех без номера телефона, 9- найти всех без email. Программа будет выполнять поиск до тех пор, пока вы не выберете 666')
+    task = int(input())
+    if task == 1:
+        print('Введите номер телефона')
+        task_phone = input()
+        print('По вашему запросу нашлось: ', *Contact.all_phones[task_phone])
+    elif task == 2:
+        print('Введите email')
+        task_email = input()
+        print('По вашему запросу нашлось: ', *Contact.all_emails[task_email])
+    elif task == 3:
+        print('Введите имя пользователя')
+        task_name = input()
+        print('По вашему запросу нашлось: ', *Contact.all_names2[task_name])
+    elif task == 4:
+        print('Введите фамилию пользователя')
+        task_name = input()
+        print('По вашему запросу нашлось: ', *Contact.all_names1[task_name])
+    elif task == 5:
+        print('Введите фамилию и имя пользователя')
+        task_name = input()
+        print('По вашему запросу нашлось: ', *Contact.all_names12[task_name])
+    elif task == 6:
+        print('Введите имя и отчество пользователя')
+        task_name = input()
+        print('По вашему запросу нашлось: ', *Contact.all_names23[task_name])
+    elif task == 8:
+        print(Contact.no_phones)
+    elif task == 9:
+        print(Contact.no_emails)
+    if task == 7:
+        print(Contact.everybody)
+        task_id = input('Введите id изменяемого профиля')
+        task_after = list(input('Введите желаемые значения для данного профиля').split())
 
-print('Чтобы выполнить команду выберите 1- найти по номеру телефона, 2- найти по email, 3- найти по имени,'
-      '4- найти по фамилии, 5- найти по Фамилия Имя, 6- найти по Имя Отчество, 7- редактирование профиля,'
-      '8- найти всех без номера телефона, 9- найти всех без email')
-task = int(input())
-if task == 1:
-    print('Введите номер телефона')
-    task_phone = input()
-    print('По вашему запросу нашлось: ', *Contact.all_phones[task_phone])
-elif task == 2:
-    print('Введите email')
-    task_email = input()
-    print('По вашему запросу нашлось: ', *Contact.all_emails[task_email])
-elif task == 3:
-    print('Введите имя пользователя')
-    task_name = input()
-    print('По вашему запросу нашлось: ', *Contact.all_names2[task_name])
-elif task == 4:
-    print('Введите фамилию пользователя')
-    task_name = input()
-    print('По вашему запросу нашлось: ', *Contact.all_names1[task_name])
-elif task == 5:
-    print('Введите фамилию и имя пользователя')
-    task_name = input()
-    print('По вашему запросу нашлось: ', *Contact.all_names12[task_name])
-elif task == 6:
-    print('Введите имя и отчество пользователя')
-    task_name = input()
-    print('По вашему запросу нашлось: ', *Contact.all_names23[task_name])
-elif task == 8:
-    print(Contact.no_phones)
-elif task == 9:
-    print(Contact.no_emails)
-if task == 7:
     print(Contact.everybody)
-    task_id = input('Введите id изменяемого профиля')
-    task_after = list(input('Введите желаемые значения для данного профиля').split())
-
-print(Contact.everybody)
+print('До следующего раза!')
